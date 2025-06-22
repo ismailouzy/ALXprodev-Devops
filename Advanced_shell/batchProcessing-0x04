@@ -15,10 +15,21 @@ fetch_pokemon() {
     fi
 }
 
+# Run fetches in background
 for NAME in "${POKEMONS[@]}"; do
     fetch_pokemon "$NAME" &
 done
 
+# List running jobs
+echo "🛠️ Running jobs:"
+jobs
+
+# Wait for all background processes
 wait
-echo "All parallel fetches completed."
+echo "✅ All parallel fetches completed."
+
+# Optionally: Kill leftover jobs (demonstrating 'kill')
+for job in $(jobs -p); do
+    kill "$job" 2>/dev/null
+done
 
